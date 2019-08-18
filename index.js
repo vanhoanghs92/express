@@ -1,10 +1,55 @@
-var express = require('express');
-var app = express();
+const express = require('express');
+const app = express();
+const bodyParser = require('body-parser');
+const low = require('lowdb');
+const FileSync = require('lowdb/adapters/FileSync');
+const adapter = new FileSync('db.json');
 
-app.get('/', function(req, res) {
-    res.send('hello world');
-})
+db = low(adapter);
 
-app.listen(8081, function () {
-    console.log('app listen on port 8081');
-})
+db.defaults({ users: [] }).write();
+
+app.set('view engine', 'pug');
+app.set('views', './views');
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+
+app.get('/', function (req, res) {
+    res.render('index', {
+        name: 'A'
+    });
+});
+
+app.get('/users', (req, res) => {
+    res.render('users/index', {
+        users: db.get('users').value()
+    });
+});
+
+app.get('/users/search', (req, res) => {
+    let name = req.query.name;
+    const users =  db.get('users').value();
+
+    const matchUsers = users.filter(function (user) {
+        return user.name.toLowerCase().indexOf(name) !== -1;
+    });
+
+    res.render('users/index', {
+        users: matchUsers,
+        value: name
+    });
+});
+
+app.get('/users/create', function (req, res) {
+    res.render('users/create');
+});
+
+app.post('/users/create', function (req, res) {
+    db.get('users').push(req.body).write();
+    res.redirect('/users');
+});
+
+app.listen(8090, function () {
+    console.log('app listen on port 8090');
+});
