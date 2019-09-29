@@ -1,10 +1,14 @@
-h1 User
-form(action="/users/search" method="GET")
+extends ../layout/default
+
+block content
+
+  h1 User
+  form(action="/users/search" method="GET")
     input( type="text" name="name" value=value)
     button Search
-ul
-  each user in users
-    li 
-      span= user.name
-      span &nbsp;
-      a(href='/user/' + user.id) View
+  ul
+    each user in users
+      li 
+        span= user.name
+        span &nbsp;
+        a(href='/users/' + user.id) View

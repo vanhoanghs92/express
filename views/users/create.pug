@@ -1,6 +1,9 @@
-h1 create new user
-p add infomation
-form(action="/users/create" method="POST")
-    input(type="text", name="name")
-    button create
+extends ../layout/default
 
+block content
+
+    h1 create new user
+    p add infomation
+    form(action="/users/create" method="POST")
+        input(type="text", name="name")
+        button create
