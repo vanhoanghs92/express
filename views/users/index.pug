@@ -2,13 +2,21 @@ extends ../layout/default
 
 block content
 
-  h1 User
-  form(action="/users/search" method="GET")
-    input( type="text" name="name" value=value)
-    button Search
-  ul
-    each user in users
-      li 
-        span= user.name
-        span &nbsp;
-        a(href='/users/' + user.id) View
+  .container
+    h1 View
+    a.btn-btn-primary(href="/users/create") New
+    form(action="/users/search", method="GET", class="d-flex")
+      input(type="text", name="q", class="form-control")
+      button.btn.btn-primary.ml-2 Search
+
+    table.table
+      tr
+        th Name
+        th Phone
+        th Link
+      each user in users 
+        tr
+          td= user.name
+          td= user.phone
+          td
+            a(href="/users/" + user.id) View
