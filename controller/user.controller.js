@@ -8,7 +8,7 @@ module.exports.index = function (req, res) {
 };
 
 module.exports.search = function (req, res) {
-    let name = req.query.name;
+    let name = req.query.q;
     const users = db.get('users').value();
 
     const matchUsers = users.filter(function (user) {
@@ -22,6 +22,7 @@ module.exports.search = function (req, res) {
 };
 
 module.exports.getCreate = function (req, res) {
+    console.log(req.cookies);
     res.render('users/create');
 };
 
@@ -37,7 +38,6 @@ module.exports.postCreate = function (req, res) {
 };
 
 module.exports.getId = function (req, res) {
-
     const id = req.params.id;
     const user = db.get('users').find({ id: id }).value();
     res.render('users/view', {
