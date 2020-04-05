@@ -3,11 +3,12 @@ const router = express.Router();
 
 const controller = require('../controller/user.controller');
 const validation = require('../controller/validation/validation.user');
+const middleRequireAuth = require('../middleware/auth.middleware');
 
-router.get('/', controller.index);
+router.get('/', middleRequireAuth.requiredAuth, controller.index);
 
 router.get('/cookie', function (req, res, next) {
-   res.cookie('userId', '12356');
+   res.cookie('userId', '1235');
    res.send('hello');
 });
 

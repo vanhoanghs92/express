@@ -24,7 +24,7 @@ app.get('/', function (req, res) {
 });
 
 app.use('/users', userRoutes);
-app.use('/auths', authRoutes);
+app.use('/auth', authRoutes);
 
 app.listen(8090, function () {
     console.log(`router listen on port ${port}`);

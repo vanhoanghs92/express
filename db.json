@@ -1,6 +1,12 @@
 {
   "users": [
     {
+      "id": "khnghy",
+      "email": "alan.tran@kyberosc.com",
+      "name": "Alan Tran",
+      "password": "12345"
+    },
+    {
       "name": "aaa",
       "id": "kzotkB8S"
     },
