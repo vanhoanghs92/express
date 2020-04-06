@@ -1,9 +1,13 @@
 const express = require('express');
+const multer = require('multer');
+
 const router = express.Router();
 
 const controller = require('../controller/user.controller');
 const validation = require('../controller/validation/validation.user');
 const middleRequireAuth = require('../middleware/auth.middleware');
+
+const upload = multer({dest: './public/uploads/'})
 
 router.get('/', middleRequireAuth.requiredAuth, controller.index);
 
@@ -16,7 +20,7 @@ router.get('/search', controller.search);
 
 router.get('/create', controller.getCreate);
 
-router.post('/create', validation.postCreate, controller.postCreate);
+router.post('/create', upload.single('avatar'), validation.postCreate, controller.postCreate);
 
 router.get('/navigation', controller.getNav);
 

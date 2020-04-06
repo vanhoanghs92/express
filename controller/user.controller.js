@@ -2,8 +2,14 @@ const shortid = require('shortid');
 const db = require('../db');
 
 module.exports.index = function (req, res) {
+    const page = parseInt(req.query.page || 1);
+    const perPage = 6;
+
+    const start = (page - 1)*perPage;
+    const end = page*perPage;
+
     res.render('users/index', {
-        users: db.get('users').value()
+        users: db.get('users').value().slice(start, end)
     });
 };
 
@@ -31,6 +37,7 @@ module.exports.getNav = function (req, res) {
 
 module.exports.postCreate = function (req, res) {
     req.body.id = shortid.generate();
+    req.body.avatar = req.file.path.replace(/\\/g, '/').split('/').slice(1).join('/');
     db.get('users').push(req.body).write();
     res.redirect('/users');
 };

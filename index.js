@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 const express = require('express');
 const bodyParser = require('body-parser');
 
@@ -14,8 +16,8 @@ app.set('views', './views');
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(cookieParser());
-app.use(express.static('public'));
+app.use(cookieParser(process.env.SECTION_SECRET));
+app.use(express.static('./public'));
 
 app.get('/', function (req, res) {
     res.render('index', {
